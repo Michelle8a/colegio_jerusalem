@@ -4,12 +4,13 @@ from . import views
 from . import usuarios_api
 
 urlpatterns = [
-    # Página de login
-    path('', views.login_view, name='login'),
-
     # Página de inicio después de iniciar sesión
-    path('inicio/', views.inicio, name='inicio'),
+    path('', views.inicio, name='inicio'),
 
+    # Página de login
+    path('login/', views.login_view, name='login'),
+
+    
     # Cerrar sesión
     path('logout/', views.logout_view, name='logout'),
 

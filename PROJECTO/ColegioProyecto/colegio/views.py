@@ -47,7 +47,8 @@ def inicio(request):
         correo = request.session["usuario_correo"]
         return render(request, "inicio.html", {"usuario": {"correo": correo}})
     else:
-        return redirect("login")
+        return render(request, "inicio.html")
+
 
 
 # ---- LOGOUT ----
