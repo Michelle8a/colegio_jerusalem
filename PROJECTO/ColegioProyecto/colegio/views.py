@@ -75,7 +75,6 @@ def logout_view(request):
 
 # ---- USUARIOS ----
 def admin_panel(request):
-
     if "usuario_id" not in request.session:
         return redirect("login")
 
@@ -83,8 +82,14 @@ def admin_panel(request):
     if request.session.get("usuario_rol") != "admin":
         return redirect("login")
 
-    # Si es admin, mostrar el panel
-    return render(request, "registro.html")
+    # Si es admin, pasar info del usuario al template
+    usuario = {
+        "correo": request.session["usuario_correo"],
+        "rol": request.session["usuario_rol"]
+    }
+
+    return render(request, "registro.html", {"usuario": usuario})
+
 
 
 #---- MAESTRO ----
@@ -95,4 +100,11 @@ def maestro(request):
     if request.session.get("usuario_rol") != "maestro":
         return redirect("login")
 
-    return render(request, "alumnos.html")
+    # Pasar info del usuario al template
+    usuario = {
+        "correo": request.session["usuario_correo"],
+        "rol": request.session["usuario_rol"]
+    }
+
+    return render(request, "alumnos.html", {"usuario": usuario})
+
