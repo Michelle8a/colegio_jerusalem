@@ -53,11 +53,15 @@ def login_view(request):
 # ---- INICIO ----
 def inicio(request):
     usuario = None
+
+    # Solo asigna el usuario si realmente hay sesión
     if "usuario_id" in request.session:
         usuario = {
             "correo": request.session["usuario_correo"],
             "rol": request.session["usuario_rol"]
         }
+
+    # Si no hay sesión, usuario seguirá siendo None
     return render(request, "inicio.html", {"usuario": usuario})
 
 
