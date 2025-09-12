@@ -21,18 +21,26 @@ def login_view(request):
         correo = request.POST.get("correo", "").strip().lower()
         contrasena = request.POST.get("contrasena", "").strip()
 
-        # Buscar el usuario por correo
+        #Busca el usuario por correo
         cursor.execute("SELECT * FROM usuarios WHERE LOWER(correo)=%s", (correo,))
         user = cursor.fetchone()
 
         if user:
             hashed_password = user["contrasena"].encode('utf-8')
             if bcrypt.checkpw(contrasena.encode('utf-8'), hashed_password):
-                # Guardar sesión
+                #Guardar sesion
                 request.session["usuario_id"] = user["id_usuario"]
                 request.session["usuario_correo"] = user["correo"]
-                request.session["usuario_rol"] = user["rol"]  #Guarda el rol
-                return redirect("admin_panel")  #Redirige al panel
+                rol = user["rol"].lower()
+                request.session["usuario_rol"] = rol
+
+                #Redirecciona por rol
+                if rol == "admin":
+                    return redirect("admin_panel")
+                elif rol == "maestro":
+                    return redirect("maestro")
+                else:
+                    return redirect("inicio")
             else:
                 error = "Correo o contraseña incorrectos"
         else:
@@ -41,13 +49,17 @@ def login_view(request):
     return render(request, "login.html", {"error": error})
 
 
+
 # ---- INICIO ----
 def inicio(request):
+    usuario = None
     if "usuario_id" in request.session:
-        correo = request.session["usuario_correo"]
-        return render(request, "inicio.html", {"usuario": {"correo": correo}})
-    else:
-        return render(request, "inicio.html")
+        usuario = {
+            "correo": request.session["usuario_correo"],
+            "rol": request.session["usuario_rol"]
+        }
+    return render(request, "inicio.html", {"usuario": usuario})
+
 
 
 
@@ -71,4 +83,12 @@ def admin_panel(request):
     return render(request, "registro.html")
 
 
+#---- MAESTRO ----
+def maestro(request):
+    if "usuario_id" not in request.session:
+        return redirect("login")
 
+    if request.session.get("usuario_rol") != "maestro":
+        return redirect("login")
+
+    return render(request, "alumnos.html")
