@@ -44,3 +44,6 @@ def eliminar_usuario(request, id_usuario):
         mycursor.execute(sql, (id_usuario,))
         mydb.commit()
         return JsonResponse({"status": "ok", "mensaje": f"Usuario {id_usuario} eliminado"})
+
+
+        
