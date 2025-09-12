@@ -21,7 +21,9 @@ urlpatterns = [
     path("api/usuarios/listar/", usuarios_api.listar_usuarios, name="listar_usuarios"),
     path("api/usuarios/agregar/", usuarios_api.registrar_usuario, name="registrar_usuario"),
     path("api/usuarios/eliminar/<int:id_usuario>/", usuarios_api.eliminar_usuario, name="eliminar_usuario"),
+    path('api/usuarios/editar/<int:id_usuario>/', usuarios_api.editar_usuario, name='editar_usuario'),
 
+    
     # SOLO MAESTROS
     path('maestros/', views.maestro, name='maestro'),
 
