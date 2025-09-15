@@ -82,7 +82,7 @@ WSGI_APPLICATION = 'colegio.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
-        "NAME": "jerusalem_college",   # tu base MySQL
+        "NAME": "jerusalem_colegio",   # tu base MySQL
         "USER": "root",                # tu usuario MySQL
         "PASSWORD": "",   # tu contraseña MySQL
         "HOST": "localhost",
