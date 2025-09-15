@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 08-09-2025 a las 22:14:30
--- Versión del servidor: 9.1.0
--- Versión de PHP: 8.3.14
+-- Host: 127.0.0.1:3306
+-- Generation Time: Sep 15, 2025 at 09:43 PM
+-- Server version: 9.1.0
+-- PHP Version: 8.3.14
 
 SET FOREIGN_KEY_CHECKS=0;
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -19,13 +19,15 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `jerusalem_college`
+-- Database: `jerusalem_colegio`
 --
+CREATE DATABASE IF NOT EXISTS `jerusalem_colegio` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
+USE `jerusalem_colegio`;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `alertas`
+-- Table structure for table `alertas`
 --
 
 DROP TABLE IF EXISTS `alertas`;
@@ -41,7 +43,7 @@ CREATE TABLE IF NOT EXISTS `alertas` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `alumnos`
+-- Table structure for table `alumnos`
 --
 
 DROP TABLE IF EXISTS `alumnos`;
@@ -61,7 +63,7 @@ CREATE TABLE IF NOT EXISTS `alumnos` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `asistencias`
+-- Table structure for table `asistencias`
 --
 
 DROP TABLE IF EXISTS `asistencias`;
@@ -77,7 +79,7 @@ CREATE TABLE IF NOT EXISTS `asistencias` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `aulas`
+-- Table structure for table `aulas`
 --
 
 DROP TABLE IF EXISTS `aulas`;
@@ -93,7 +95,7 @@ CREATE TABLE IF NOT EXISTS `aulas` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `auth_group`
+-- Table structure for table `auth_group`
 --
 
 DROP TABLE IF EXISTS `auth_group`;
@@ -107,7 +109,7 @@ CREATE TABLE IF NOT EXISTS `auth_group` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `auth_group_permissions`
+-- Table structure for table `auth_group_permissions`
 --
 
 DROP TABLE IF EXISTS `auth_group_permissions`;
@@ -124,7 +126,7 @@ CREATE TABLE IF NOT EXISTS `auth_group_permissions` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `auth_permission`
+-- Table structure for table `auth_permission`
 --
 
 DROP TABLE IF EXISTS `auth_permission`;
@@ -139,7 +141,7 @@ CREATE TABLE IF NOT EXISTS `auth_permission` (
 ) ENGINE=MyISAM AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Volcado de datos para la tabla `auth_permission`
+-- Dumping data for table `auth_permission`
 --
 
 INSERT INTO `auth_permission` (`id`, `name`, `content_type_id`, `codename`) VALUES
@@ -171,7 +173,7 @@ INSERT INTO `auth_permission` (`id`, `name`, `content_type_id`, `codename`) VALU
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `auth_user`
+-- Table structure for table `auth_user`
 --
 
 DROP TABLE IF EXISTS `auth_user`;
@@ -194,7 +196,7 @@ CREATE TABLE IF NOT EXISTS `auth_user` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `auth_user_groups`
+-- Table structure for table `auth_user_groups`
 --
 
 DROP TABLE IF EXISTS `auth_user_groups`;
@@ -211,7 +213,7 @@ CREATE TABLE IF NOT EXISTS `auth_user_groups` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `auth_user_user_permissions`
+-- Table structure for table `auth_user_user_permissions`
 --
 
 DROP TABLE IF EXISTS `auth_user_user_permissions`;
@@ -228,7 +230,7 @@ CREATE TABLE IF NOT EXISTS `auth_user_user_permissions` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `calificaciones`
+-- Table structure for table `calificaciones`
 --
 
 DROP TABLE IF EXISTS `calificaciones`;
@@ -246,7 +248,7 @@ CREATE TABLE IF NOT EXISTS `calificaciones` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `categorias`
+-- Table structure for table `categorias`
 --
 
 DROP TABLE IF EXISTS `categorias`;
@@ -260,7 +262,7 @@ CREATE TABLE IF NOT EXISTS `categorias` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `django_admin_log`
+-- Table structure for table `django_admin_log`
 --
 
 DROP TABLE IF EXISTS `django_admin_log`;
@@ -276,12 +278,12 @@ CREATE TABLE IF NOT EXISTS `django_admin_log` (
   PRIMARY KEY (`id`),
   KEY `django_admin_log_content_type_id_c4bce8eb` (`content_type_id`),
   KEY `django_admin_log_user_id_c564eba6` (`user_id`)
-) ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `django_content_type`
+-- Table structure for table `django_content_type`
 --
 
 DROP TABLE IF EXISTS `django_content_type`;
@@ -294,7 +296,7 @@ CREATE TABLE IF NOT EXISTS `django_content_type` (
 ) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Volcado de datos para la tabla `django_content_type`
+-- Dumping data for table `django_content_type`
 --
 
 INSERT INTO `django_content_type` (`id`, `app_label`, `model`) VALUES
@@ -308,7 +310,7 @@ INSERT INTO `django_content_type` (`id`, `app_label`, `model`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `django_migrations`
+-- Table structure for table `django_migrations`
 --
 
 DROP TABLE IF EXISTS `django_migrations`;
@@ -321,7 +323,7 @@ CREATE TABLE IF NOT EXISTS `django_migrations` (
 ) ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Volcado de datos para la tabla `django_migrations`
+-- Dumping data for table `django_migrations`
 --
 
 INSERT INTO `django_migrations` (`id`, `app`, `name`, `applied`) VALUES
@@ -347,7 +349,7 @@ INSERT INTO `django_migrations` (`id`, `app`, `name`, `applied`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `django_session`
+-- Table structure for table `django_session`
 --
 
 DROP TABLE IF EXISTS `django_session`;
@@ -359,10 +361,18 @@ CREATE TABLE IF NOT EXISTS `django_session` (
   KEY `django_session_expire_date_a5c62663` (`expire_date`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+--
+-- Dumping data for table `django_session`
+--
+
+INSERT INTO `django_session` (`session_key`, `session_data`, `expire_date`) VALUES
+('6sl1py7k1huez705zr53vxwd1sdzsejx', '.eJyrViotLk0sysyPz0xRsrLQgXOT84uKUvOVrJQSU3Iz8xzApF5yfq4SQklRfg5MXqkWANDfGiw:1uxAj3:2vykXXBiZ33IXGzHr6eGIFUgBYEA2cUYD3CEvRvvAr0', '2025-09-26 20:50:33.463401'),
+('w9br6cs5h12xj7xd35r7egcgkonqn8xh', '.eJyrViotLk0sysyPz0xRsjI01IHzk_OLilLzlayUsoFch8SU3Mw8veT8XCWEiqL8HKA0WEapFgDEuxn0:1uxCNm:GqWhXI4WOLRD7NGqR-l88V8fo2Sfart7LOI9rdUJK-E', '2025-09-26 22:36:42.179384');
+
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `eventos`
+-- Table structure for table `eventos`
 --
 
 DROP TABLE IF EXISTS `eventos`;
@@ -377,7 +387,7 @@ CREATE TABLE IF NOT EXISTS `eventos` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `grados`
+-- Table structure for table `grados`
 --
 
 DROP TABLE IF EXISTS `grados`;
@@ -392,7 +402,7 @@ CREATE TABLE IF NOT EXISTS `grados` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `horarios`
+-- Table structure for table `horarios`
 --
 
 DROP TABLE IF EXISTS `horarios`;
@@ -411,7 +421,7 @@ CREATE TABLE IF NOT EXISTS `horarios` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `maestros`
+-- Table structure for table `maestros`
 --
 
 DROP TABLE IF EXISTS `maestros`;
@@ -426,7 +436,7 @@ CREATE TABLE IF NOT EXISTS `maestros` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `materias`
+-- Table structure for table `materias`
 --
 
 DROP TABLE IF EXISTS `materias`;
@@ -442,7 +452,7 @@ CREATE TABLE IF NOT EXISTS `materias` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `mensualidades`
+-- Table structure for table `mensualidades`
 --
 
 DROP TABLE IF EXISTS `mensualidades`;
@@ -459,7 +469,7 @@ CREATE TABLE IF NOT EXISTS `mensualidades` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `responsables`
+-- Table structure for table `responsables`
 --
 
 DROP TABLE IF EXISTS `responsables`;
@@ -475,7 +485,7 @@ CREATE TABLE IF NOT EXISTS `responsables` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `tareas`
+-- Table structure for table `tareas`
 --
 
 DROP TABLE IF EXISTS `tareas`;
@@ -492,7 +502,7 @@ CREATE TABLE IF NOT EXISTS `tareas` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `usuarios`
+-- Table structure for table `usuarios`
 --
 
 DROP TABLE IF EXISTS `usuarios`;
@@ -504,66 +514,70 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `contrasena` varchar(255) NOT NULL,
   PRIMARY KEY (`id_usuario`),
   UNIQUE KEY `usuario` (`correo`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Volcado de datos para la tabla `usuarios`
+-- Dumping data for table `usuarios`
 --
 
 INSERT INTO `usuarios` (`id_usuario`, `nombre`, `rol`, `correo`, `contrasena`) VALUES
-(8, 'admin', 'admin', 'admin@admin.com', '$2b$12$8skXZ9y3zF.veyqyzAmfn.VNIoZTuEnlmCVGrehwnEFoVi50KkeL.');
+(8, 'admin', 'padre', 'admin@admin.com', '$2b$12$XDKwHWSdZaLrHxDhGL5.Yu6fGnZLe/JsJizpjJ9LzuLffOUbWMwYK'),
+(11, 'kari_admin', 'admin', 'kari@admin.com', '$2b$12$4k1Xrs.j3NB9ws5V0Eb4BOw8tUoXHhLPVqwUsRD.DvHd8YfZu5KO.'),
+(15, 'kari_maestro', 'maestro', 'kari@maestro.com', '$2b$12$SPerYKfFQFaNFSgre6Qpk.HvDuz2iRp62X0ihug1kNxyp4vZxLyTW'),
+(16, 'kari_alumno', 'alumno', 'kari@alumno.com', '$2b$12$0SqxkOtp6JaGUvlcTaHmDOlFP0ud6RQOifq2gH.IzWv1sjmB3MrOy'),
+(17, 'kari_padre', 'padre', 'kari@padre.com', '$2b$12$T5W.RFoqDkw.aF3J9V6u/uXvuZOl9L6TCsSZhFlELG7HsFL7jkLJG');
 
 --
--- Restricciones para tablas volcadas
+-- Constraints for dumped tables
 --
 
 --
--- Filtros para la tabla `alumnos`
+-- Constraints for table `alumnos`
 --
 ALTER TABLE `alumnos`
   ADD CONSTRAINT `fk_alumnos_grados` FOREIGN KEY (`id_grado`) REFERENCES `grados` (`id_grado`) ON DELETE SET NULL ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_alumnos_responsables` FOREIGN KEY (`id_responsable`) REFERENCES `responsables` (`id_responsable`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `asistencias`
+-- Constraints for table `asistencias`
 --
 ALTER TABLE `asistencias`
   ADD CONSTRAINT `fk_asistencias_alumnos` FOREIGN KEY (`id_alumno`) REFERENCES `alumnos` (`id_alumno`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `aulas`
+-- Constraints for table `aulas`
 --
 ALTER TABLE `aulas`
   ADD CONSTRAINT `fk_aulas_grados` FOREIGN KEY (`id_grado`) REFERENCES `grados` (`id_grado`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `calificaciones`
+-- Constraints for table `calificaciones`
 --
 ALTER TABLE `calificaciones`
   ADD CONSTRAINT `fk_calificaciones_alumnos` FOREIGN KEY (`id_alumno`) REFERENCES `alumnos` (`id_alumno`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_calificaciones_materias` FOREIGN KEY (`id_materia`) REFERENCES `materias` (`id_materia`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `horarios`
+-- Constraints for table `horarios`
 --
 ALTER TABLE `horarios`
   ADD CONSTRAINT `fk_horarios_aulas` FOREIGN KEY (`id_aula`) REFERENCES `aulas` (`id_aula`) ON DELETE SET NULL ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_horarios_materias` FOREIGN KEY (`id_materia`) REFERENCES `materias` (`id_materia`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `materias`
+-- Constraints for table `materias`
 --
 ALTER TABLE `materias`
   ADD CONSTRAINT `fk_materias_maestros` FOREIGN KEY (`id_maestro`) REFERENCES `maestros` (`id_maestro`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `mensualidades`
+-- Constraints for table `mensualidades`
 --
 ALTER TABLE `mensualidades`
   ADD CONSTRAINT `fk_mensualidades_alumnos` FOREIGN KEY (`id_alumno`) REFERENCES `alumnos` (`id_alumno`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `tareas`
+-- Constraints for table `tareas`
 --
 ALTER TABLE `tareas`
   ADD CONSTRAINT `fk_tareas_materias` FOREIGN KEY (`id_materia`) REFERENCES `materias` (`id_materia`) ON DELETE SET NULL ON UPDATE CASCADE;
