@@ -91,8 +91,35 @@
       </div>
     </div>
   </div>
+  <div class="grados" >
+    <button id="grados" class="btn-primary">grados</button>
+  </div>
+  <!-- Include jQuery from a CDN -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
   <script src="{% static 'registro.js' %}"></script>
 </body>
-
+<script>
+    $(document).ready(function(){
+        //invocar la vista de grados 
+        $("grados").click(function(){
+            $.ajax({
+                url:"http://127.0.0.1:8000/grados/",
+                type:"GET",
+                data: JSON.stringify({
+                    nota: "desdevariablesesion",
+                }),
+                success: function(response){
+                    console.log("si se recibe la respuesta del servidor");
+                    window.location.replace("http://127.0.0.1:8000/grados/");
+                },
+                error: function(response){
+                    console.error("error en la llamada de AJAX:", error);
+                    console.log("este es un nuevo mensaje para subir el acmbio a github remoto");
+                }
+            });
+        });
+    });
+    
+</script>
 </html>

@@ -90,7 +90,10 @@ def admin_panel(request):
 
     return render(request, "registro.html", {"usuario": usuario})
 
-
+#vista de los grados 
+def grados(request):
+   
+    return render(request,"grados/grados.html")
 
 #---- MAESTRO ----
 def maestro(request):
