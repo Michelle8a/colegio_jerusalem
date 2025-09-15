@@ -16,4 +16,4 @@ venv/
 # Archivos de sistema
 .DS_Store
 Thumbs.db
-
+>>> 0ceb826 (Agregar .gitignore para Python/Django)
