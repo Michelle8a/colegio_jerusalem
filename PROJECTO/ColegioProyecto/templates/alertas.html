@@ -1,0 +1,229 @@
+{% load static %}
+{% load tz %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Alertas - Colegio Jerusalén</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        .card-academica { border-left: 5px solid #dc3545; } /* Roja */
+        .card-administrativa { border-left: 5px solid #0d6efd; } /* Azul */
+        .icon-alert { font-size: 1.5rem; margin-right: 0.5rem; vertical-align: middle; }
+    </style>
+</head>
+<body>
+
+    <!-- Barra de navegación -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#">Colegio Jerusalén</a>
+            <div class="collapse navbar-collapse" id="menuNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <span class="nav-link text-white">Bienvenido: {{ usuario.correo }}</span>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'logout' %}" class="btn btn-danger">Cerrar sesión</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Encabezado -->
+    <header class="bg-light text-center py-5">
+        <div class="container">
+            <h1 class="fw-bold">Dashboard de Alertas</h1>
+            <p class="text-muted">
+                Estas alertas ayudan a detectar a tiempo riesgos de deserción escolar.  
+                Atenderlas puede marcar la diferencia en la permanencia de nuestros alumnos.
+            </p>
+        </div>
+    </header>
+
+    <!-- Resumen -->
+    <section class="container mb-4">
+        <div class="alert alert-info text-center shadow-sm">
+            <strong>Total de alertas:</strong> {{ alertas|length }}
+        </div>
+    </section>
+
+    <!-- Contenido principal del dashboard -->
+    <main class="container my-5">
+        <h2 class="mb-4">Alertas</h2>
+
+        <div class="row g-4">
+            {% for alerta in alertas %}
+                <div class="col-md-4 col-sm-6">
+                    <div class="card shadow-sm 
+                        {% if alerta.tipo == 'Académica' %}card-academica
+                        {% elif alerta.tipo == 'Administrativa' %}card-administrativa
+                        {% endif %}">
+                        
+                        <div class="card-header d-flex align-items-center">
+                            {% if alerta.tipo == 'Académica' %}
+                                <i class="bi bi-exclamation-triangle-fill text-danger icon-alert"></i>
+                            {% elif alerta.tipo == 'Administrativa' %}
+                                <i class="bi bi-info-circle-fill text-primary icon-alert"></i>
+                            {% endif %}
+                            <span class="fw-bold">{{ alerta.tipo }}</span>
+                        </div>
+
+                        <div class="card-body">
+                            <p class="card-text">
+                                <strong>Descripción:</strong> {{ alerta.mensaje }}
+                            </p>
+                            <p class="text-muted small">
+                                Fecha: {{ alerta.fecha|date:"d/m/Y" }}
+                            </p>
+
+                            <!-- Botones de acción -->
+                            <div class="d-flex flex-wrap justify-content-end gap-2 mt-3">
+                                <a href="#" class="btn btn-sm btn-success btn-seguimiento" data-bs-toggle="modal" data-bs-target="#modalSeguimiento">
+                                    <i class="bi bi-clipboard-check"></i> Seguimiento
+                                </a>
+                                <a href="#" class="btn btn-sm btn-info btn-padres" data-bs-toggle="modal" data-bs-target="#modalPadres">
+                                    <i class="bi bi-envelope"></i> Contactar Padres
+                                </a>
+                                <a href="#" class="btn btn-sm btn-danger"
+                                   onclick="return confirm('¿Seguro que deseas eliminar esta alerta?');">
+                                    <i class="bi bi-trash"></i> Eliminar
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <p class="text-center text-muted">No hay alertas registradas.</p>
+            {% endfor %}
+        </div>
+    </main>
+
+    <!-- Modal Seguimiento -->
+    <div class="modal fade" id="modalSeguimiento" tabindex="-1" aria-labelledby="modalSeguimientoLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title fw-bold" id="modalSeguimientoLabel">Opciones de Seguimiento</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+          </div>
+          <div class="modal-body">
+            <button id="btnEnviarEmail" class="btn btn-primary w-100 mb-3">Enviar notificación a alumno</button>
+            <button id="btnAgendar" class="btn btn-secondary w-100">Agendar seguimiento</button>
+
+            <!-- Calendario oculto inicialmente -->
+            <div id="calendario" class="mt-3" style="display:none;">
+                <label for="diaSemana" class="form-label">Selecciona día:</label>
+                <select id="diaSemana" class="form-select mb-2">
+                    <option value="Lunes">Lunes</option>
+                    <option value="Martes">Martes</option>
+                    <option value="Miércoles">Miércoles</option>
+                    <option value="Jueves">Jueves</option>
+                    <option value="Viernes">Viernes</option>
+                </select>
+
+                <label for="hora" class="form-label">Selecciona hora:</label>
+                <input type="time" id="hora" class="form-control mb-2">
+
+                <button id="btnConfirmarAgendar" class="btn btn-success w-100 mt-2">Confirmar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Contactar Padres -->
+    <div class="modal fade" id="modalPadres" tabindex="-1" aria-labelledby="modalPadresLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title fw-bold" id="modalPadresLabel">Contactar Padres</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+          </div>
+          <div class="modal-body text-center">
+            <p>¿Deseas notificar a los padres del alumno?</p>
+            <button id="btnNotificarPadres" class="btn btn-primary w-100">Confirmar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pie de página -->
+    <footer class="bg-primary text-white text-center py-4 mt-5">
+        <div class="container">
+            <p class="mb-1">&copy; 2025 Colegio Jerusalén - Todos los derechos reservados.</p>
+            <p class="mb-0">Dirección: Calle Principal #123, Ciudad - Tel: (503) 2222-3333</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        let botonActivo = null; // Para Seguimiento
+        let botonPadresActivo = null; // Para Contactar Padres
+
+        // Detectar qué botón abrió el modal de seguimiento
+        document.querySelectorAll('.btn-seguimiento').forEach(btn => {
+            btn.addEventListener('click', function() {
+                botonActivo = btn;
+                document.getElementById('calendario').style.display = 'none'; // Oculta calendario
+            });
+        });
+
+        // Enviar notificación a alumno
+        document.getElementById('btnEnviarEmail').addEventListener('click', function() {
+            alert('Email enviado');
+            var modal = bootstrap.Modal.getInstance(document.getElementById('modalSeguimiento'));
+            modal.hide();
+            if(botonActivo) {
+                botonActivo.innerHTML = '<i class="bi bi-check-circle-fill"></i> Seguimiento';
+            }
+        });
+
+        // Mostrar calendario para agendar seguimiento
+        document.getElementById('btnAgendar').addEventListener('click', function() {
+            document.getElementById('calendario').style.display = 'block';
+        });
+
+        // Confirmar agendar seguimiento
+        document.getElementById('btnConfirmarAgendar').addEventListener('click', function() {
+            var dia = document.getElementById('diaSemana').value;
+            var hora = document.getElementById('hora').value;
+
+            if(!hora) {
+                alert('Por favor selecciona una hora');
+                return;
+            }
+
+            alert(`Seguimiento agendado para ${dia} a las ${hora}, alumno notificado`);
+            var modal = bootstrap.Modal.getInstance(document.getElementById('modalSeguimiento'));
+            modal.hide();
+            if(botonActivo) {
+                botonActivo.innerHTML = '<i class="bi bi-check-circle-fill"></i> Seguimiento';
+            }
+        });
+
+        // Detectar qué botón abrió el modal de padres
+        document.querySelectorAll('.btn-padres').forEach(btn => {
+            btn.addEventListener('click', function() {
+                botonPadresActivo = btn;
+            });
+        });
+
+        // Confirmar notificación a padres
+        document.getElementById('btnNotificarPadres').addEventListener('click', function() {
+            alert('Padres notificados');
+            var modal = bootstrap.Modal.getInstance(document.getElementById('modalPadres'));
+            modal.hide();
+            if(botonPadresActivo) {
+                botonPadresActivo.innerHTML = '<i class="bi bi-check-circle-fill"></i> Contactar Padres';
+            }
+        });
+    });
+    </script>
+</body>
+
+

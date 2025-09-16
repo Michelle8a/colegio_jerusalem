@@ -28,4 +28,8 @@ urlpatterns = [
     path('maestros/', views.maestro, name='maestro'),
 
 
+    # ALERTAS
+    path('alertas/', views.alertas, name='alertas'),
+
+
 ]

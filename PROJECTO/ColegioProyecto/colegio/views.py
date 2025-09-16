@@ -108,3 +108,22 @@ def maestro(request):
 
     return render(request, "alumnos.html", {"usuario": usuario})
 
+
+# ---- ALERTAS ----
+def alertas(request):
+    if "usuario_id" not in request.session:
+        return redirect("login")
+
+    # Obtener datos de la BD
+    cursor.execute("SELECT * FROM alertas ORDER BY fecha DESC")
+    lista_alertas = cursor.fetchall()
+
+    usuario = {
+        "correo": request.session["usuario_correo"],
+        "rol": request.session["usuario_rol"]
+    }
+
+    return render(request, "alertas.html", {
+        "usuario": usuario,
+        "alertas": lista_alertas
+    })
