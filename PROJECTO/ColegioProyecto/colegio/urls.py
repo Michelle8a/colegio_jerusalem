@@ -3,6 +3,10 @@ from django.urls import path
 from . import views
 from . import usuarios_api
 
+#------------------------
+from representantes import views_representantes
+from django.contrib import admin
+
 urlpatterns = [
     # Página de inicio después de iniciar sesión
     path('', views.inicio, name='inicio'),
@@ -47,6 +51,8 @@ urlpatterns = [
     path('lista_maestros/', views.listar_maestros, name='lista_maestros'),
 
 
-
+#------------------------
+path('admin/', admin.site.urls),
+path('representantes/', views_representantes.lista_representantes, name='lista_representantes'),
     
 ]

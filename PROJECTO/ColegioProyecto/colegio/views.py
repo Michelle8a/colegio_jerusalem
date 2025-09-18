@@ -9,6 +9,9 @@ from collections import defaultdict
 from django.shortcuts import render
 from django.db import connection
 
+#----------------------------
+
+
 
 # Conexión a MySQL
 db = mysql.connector.connect(
@@ -125,7 +128,7 @@ def padre(request):
         "correo": request.session["usuario_correo"],
         "rol": request.session["usuario_rol"]
     }
-    return render(request, "Representante.html", {"usuario": usuario})
+    return render(request, "Mensualidades.html", {"usuario": usuario})
 
 
 # ---- ALERTAS ----
@@ -231,3 +234,30 @@ def listar_maestros(request):
         "maestros": lista_maestros
     })
 
+
+
+#---------------------------
+
+def lista_representantes():
+    #conn = get_connection()
+    #cursor = conn.cursor()
+
+    # 🔹 Consulta SQL
+    cursor.execute("SELECT Id, Nombre, Apellido, Telefono, Email FROM Representante")
+    rows = cursor.fetchall()
+
+    # Convertir a lista de diccionarios para Jinja2
+    representantes = []
+    for row in rows:
+        representantes.append({
+            "id": row[0],
+            "nombre": row[1],
+            "apellido": row[2],
+            "telefono": row[3],
+            "email": row[4]
+        })
+
+    #cursor.close()
+    #conn.close()
+
+    return render("Representantes.html", representantes=representantes)

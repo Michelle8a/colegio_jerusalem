@@ -3,11 +3,10 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Sep 15, 2025 at 09:43 PM
+-- Generation Time: Sep 18, 2025 at 11:41 PM
 -- Server version: 9.1.0
 -- PHP Version: 8.3.14
 
-SET FOREIGN_KEY_CHECKS=0;
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
@@ -21,8 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `jerusalem_colegio`
 --
-CREATE DATABASE IF NOT EXISTS `jerusalem_colegio` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
-USE `jerusalem_colegio`;
 
 -- --------------------------------------------------------
 
@@ -38,7 +35,19 @@ CREATE TABLE IF NOT EXISTS `alertas` (
   `destinatario` varchar(100) DEFAULT NULL,
   `fecha` date DEFAULT NULL,
   PRIMARY KEY (`id_alerta`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `alertas`
+--
+
+INSERT INTO `alertas` (`id_alerta`, `tipo`, `mensaje`, `destinatario`, `fecha`) VALUES
+(1, 'Académica', 'Alumno: Juan Perez - Baja calificación en matemáticas. Calificación abajo de 6.', 'Maestro', '2025-09-16'),
+(2, 'Académica', 'Alumno: Marvin Barrera - Baja calificación en lenguaje. Calificación abajo de 6.', 'Maestro', '2025-09-16'),
+(3, 'Académica', 'Alumno: Maria Jose Mendoza - Baja calificación en ciencias. Calificación abajo de 6.', 'Maestro', '2025-09-16'),
+(4, 'Académica', 'Alumno: Samuel Hernandez - Baja calificación en sociales. Calificación abajo de 6.', 'Maestro', '2025-09-16'),
+(5, 'Administrativa', 'Alumno: Orlando Moran - Inasistencia. Fecha: 12/09/2025', 'Maestro', '2025-09-16'),
+(6, 'Administrativa', 'Alumno: Marta Jovel - Inasistencia. Fecha: 09/09/2025', 'Maestro', '2025-09-16');
 
 -- --------------------------------------------------------
 
@@ -367,7 +376,8 @@ CREATE TABLE IF NOT EXISTS `django_session` (
 
 INSERT INTO `django_session` (`session_key`, `session_data`, `expire_date`) VALUES
 ('6sl1py7k1huez705zr53vxwd1sdzsejx', '.eJyrViotLk0sysyPz0xRsrLQgXOT84uKUvOVrJQSU3Iz8xzApF5yfq4SQklRfg5MXqkWANDfGiw:1uxAj3:2vykXXBiZ33IXGzHr6eGIFUgBYEA2cUYD3CEvRvvAr0', '2025-09-26 20:50:33.463401'),
-('w9br6cs5h12xj7xd35r7egcgkonqn8xh', '.eJyrViotLk0sysyPz0xRsjI01IHzk_OLilLzlayUsoFch8SU3Mw8veT8XCWEiqL8HKA0WEapFgDEuxn0:1uxCNm:GqWhXI4WOLRD7NGqR-l88V8fo2Sfart7LOI9rdUJK-E', '2025-09-26 22:36:42.179384');
+('w9br6cs5h12xj7xd35r7egcgkonqn8xh', '.eJyrViotLk0sysyPz0xRsjI01IHzk_OLilLzlayUsoFch8SU3Mw8veT8XCWEiqL8HKA0WEapFgDEuxn0:1uxCNm:GqWhXI4WOLRD7NGqR-l88V8fo2Sfart7LOI9rdUJK-E', '2025-09-26 22:36:42.179384'),
+('5u4u0fyrem409fkm78v0tfildujautsc', '.eJyrViotLk0sysyPz0xRsjI014Hzk_OLilLzlayUsoFch4LElKJUveT8XCWEiqL8HKA0WEapFgDGyxoA:1uzO7R:ZiTZmNL5dcihYgZQMrTMi0S_F79Qcjm3c7IMKMQzi24', '2025-10-02 23:32:53.276052');
 
 -- --------------------------------------------------------
 
@@ -396,8 +406,17 @@ CREATE TABLE IF NOT EXISTS `grados` (
   `nombre` varchar(100) NOT NULL,
   `nivel` varchar(50) DEFAULT NULL,
   `seccion` varchar(10) DEFAULT NULL,
+  `encargado` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id_grado`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `grados`
+--
+
+INSERT INTO `grados` (`id_grado`, `nombre`, `nivel`, `seccion`, `encargado`) VALUES
+(1, 'Primer grado', 'Primaria', 'A', 'Manuel Calderon'),
+(2, 'Segundo Grado', 'Primaria', 'A', 'Victor Lara');
 
 -- --------------------------------------------------------
 
@@ -416,7 +435,58 @@ CREATE TABLE IF NOT EXISTS `horarios` (
   PRIMARY KEY (`id_horario`),
   KEY `fk_horarios_materias` (`id_materia`),
   KEY `fk_horarios_aulas` (`id_aula`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `horarios`
+--
+
+INSERT INTO `horarios` (`id_horario`, `dia`, `hora_inicio`, `hora_fin`, `id_materia`, `id_aula`) VALUES
+(1, 'Lunes', '07:00:00', '08:00:00', NULL, NULL),
+(2, 'Lunes', '08:00:00', '09:00:00', NULL, NULL),
+(3, 'Lunes', '09:00:00', '10:00:00', NULL, NULL),
+(4, 'Lunes', '10:00:00', '11:00:00', NULL, NULL),
+(5, 'Lunes', '11:00:00', '12:00:00', NULL, NULL),
+(6, 'Lunes', '13:00:00', '14:00:00', NULL, NULL),
+(7, 'Lunes', '14:00:00', '15:00:00', NULL, NULL),
+(8, 'Lunes', '15:00:00', '16:00:00', NULL, NULL),
+(9, 'Lunes', '16:00:00', '17:00:00', NULL, NULL),
+(10, 'Martes', '07:00:00', '08:00:00', NULL, NULL),
+(11, 'Martes', '08:00:00', '09:00:00', NULL, NULL),
+(12, 'Martes', '09:00:00', '10:00:00', NULL, NULL),
+(13, 'Martes', '10:00:00', '11:00:00', NULL, NULL),
+(14, 'Martes', '11:00:00', '12:00:00', NULL, NULL),
+(15, 'Martes', '13:00:00', '14:00:00', NULL, NULL),
+(16, 'Martes', '14:00:00', '15:00:00', NULL, NULL),
+(17, 'Martes', '15:00:00', '16:00:00', NULL, NULL),
+(18, 'Martes', '16:00:00', '17:00:00', NULL, NULL),
+(19, 'Miércoles', '07:00:00', '08:00:00', NULL, NULL),
+(20, 'Miércoles', '08:00:00', '09:00:00', NULL, NULL),
+(21, 'Miércoles', '09:00:00', '10:00:00', NULL, NULL),
+(22, 'Miércoles', '10:00:00', '11:00:00', NULL, NULL),
+(23, 'Miércoles', '11:00:00', '12:00:00', NULL, NULL),
+(24, 'Miércoles', '13:00:00', '14:00:00', NULL, NULL),
+(25, 'Miércoles', '14:00:00', '15:00:00', NULL, NULL),
+(26, 'Miércoles', '15:00:00', '16:00:00', NULL, NULL),
+(27, 'Miércoles', '16:00:00', '17:00:00', NULL, NULL),
+(28, 'Jueves', '07:00:00', '08:00:00', NULL, NULL),
+(29, 'Jueves', '08:00:00', '09:00:00', NULL, NULL),
+(30, 'Jueves', '09:00:00', '10:00:00', NULL, NULL),
+(31, 'Jueves', '10:00:00', '11:00:00', NULL, NULL),
+(32, 'Jueves', '11:00:00', '12:00:00', NULL, NULL),
+(33, 'Jueves', '13:00:00', '14:00:00', NULL, NULL),
+(34, 'Jueves', '14:00:00', '15:00:00', NULL, NULL),
+(35, 'Jueves', '15:00:00', '16:00:00', NULL, NULL),
+(36, 'Jueves', '16:00:00', '17:00:00', NULL, NULL),
+(37, 'Viernes', '07:00:00', '08:00:00', NULL, NULL),
+(38, 'Viernes', '08:00:00', '09:00:00', NULL, NULL),
+(39, 'Viernes', '09:00:00', '10:00:00', NULL, NULL),
+(40, 'Viernes', '10:00:00', '11:00:00', NULL, NULL),
+(41, 'Viernes', '11:00:00', '12:00:00', NULL, NULL),
+(42, 'Viernes', '13:00:00', '14:00:00', NULL, NULL),
+(43, 'Viernes', '14:00:00', '15:00:00', NULL, NULL),
+(44, 'Viernes', '15:00:00', '16:00:00', NULL, NULL),
+(45, 'Viernes', '16:00:00', '17:00:00', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -431,7 +501,23 @@ CREATE TABLE IF NOT EXISTS `maestros` (
   `apellidos` varchar(100) NOT NULL,
   `especialidad` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id_maestro`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `maestros`
+--
+
+INSERT INTO `maestros` (`id_maestro`, `nombres`, `apellidos`, `especialidad`) VALUES
+(1, 'Jose Manuel', 'Calderon', 'Python'),
+(2, 'Astrid', 'Orellana', 'Socio Laboral'),
+(3, 'Juan', 'Pérez', 'Matemáticas'),
+(4, 'María', 'Gómez', 'Lenguaje'),
+(5, 'Carlos', 'Ramírez', 'Ciencias'),
+(6, 'Ana', 'López', 'Historia'),
+(7, 'Luis', 'Martínez', 'Educación Física'),
+(8, 'Sofía', 'Hernández', 'Arte'),
+(9, 'Miguel', 'Torres', 'Inglés'),
+(10, 'Laura', 'Santos', 'Música');
 
 -- --------------------------------------------------------
 
@@ -447,7 +533,15 @@ CREATE TABLE IF NOT EXISTS `materias` (
   `id_maestro` int DEFAULT NULL,
   PRIMARY KEY (`id_materia`),
   KEY `fk_materias_maestros` (`id_maestro`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `materias`
+--
+
+INSERT INTO `materias` (`id_materia`, `nombre`, `descripcion`, `id_maestro`) VALUES
+(1, 'programacion python', 'programacion con python', 1),
+(2, 'Socio emocional', 'Habilidades blandas para la vida', 2);
 
 -- --------------------------------------------------------
 
@@ -581,7 +675,6 @@ ALTER TABLE `mensualidades`
 --
 ALTER TABLE `tareas`
   ADD CONSTRAINT `fk_tareas_materias` FOREIGN KEY (`id_materia`) REFERENCES `materias` (`id_materia`) ON DELETE SET NULL ON UPDATE CASCADE;
-SET FOREIGN_KEY_CHECKS=1;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
