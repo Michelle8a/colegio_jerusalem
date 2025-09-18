@@ -1,0 +1,164 @@
+{% load static %}
+{% load tz %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Horarios - Colegio Jerusalén</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Barra de navegación -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow">
+      <div class="container">
+          <a class="navbar-brand fw-bold" href="#">Colegio Jerusalén</a>
+          <div class="collapse navbar-collapse" id="menuNav">
+              <ul class="navbar-nav ms-auto">
+                  <li class="nav-item">
+                      <span class="nav-link text-white">Bienvenido: {{ usuario.correo }}</span>
+                  </li>
+                  <li class="nav-item">
+                      <a href="{% url 'logout' %}" class="btn btn-danger">Cerrar sesión</a>
+                  </li>
+              </ul>
+          </div>
+      </div>
+  </nav>
+
+  <!-- Encabezado -->
+  <header class="bg-light text-center py-5">
+      <div class="container">
+          <h1 class="fw-bold">Horarios</h1>
+          <p class="text-muted">Consulta tus clases y administra tus solicitudes.</p>
+      </div>
+  </header>
+
+  <!-- Horarios por día -->
+  <main class="container my-5">
+      <h2 class="mb-4">Mi horario</h2>
+
+      {% for dia, horarios in horarios_por_dia.items %}
+        <h4 class="mt-4">{{ dia }}</h4>
+        <div class="table-responsive shadow-sm mb-4">
+            <table class="table table-striped table-hover">
+                <thead class="table-primary">
+                    <tr>
+                        <th>Hora inicio</th>
+                        <th>Hora fin</th>
+                        <th>Materia</th>
+                        <th>Aula</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for h in horarios %}
+                        <tr>
+                            <td>{{ h.hora_inicio }}</td>
+                            <td>{{ h.hora_fin }}</td>
+                            <td>{{ h.id_materia }}</td>
+                            <td>{{ h.id_aula }}</td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="4" class="text-center text-muted">No hay horarios asignados.</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+      {% endfor %}
+
+      <!-- Botones de solicitudes -->
+      <div class="d-flex gap-3 mt-4">
+          <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalIncapacidad">
+              <i class="bi bi-file-earmark-medical"></i> Subir incapacidad
+          </button>
+          <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#modalPermiso">
+              <i class="bi bi-clipboard-plus"></i> Solicitar permiso personal
+          </button>
+      </div>
+  </main>
+
+  <!-- Modal Subir Incapacidad -->
+  <div class="modal fade" id="modalIncapacidad" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title fw-bold">Subir incapacidad</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+              </div>
+              <div class="modal-body">
+                  <form id="formIncapacidad">
+                      <div class="mb-3">
+                          <label for="archivoIncapacidad" class="form-label">Selecciona archivo</label>
+                          <input type="file" id="archivoIncapacidad" class="form-control" accept=".pdf,.jpg,.png" required>
+                      </div>
+                      <button type="submit" class="btn btn-success w-100">Subir</button>
+                  </form>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <!-- Modal Solicitar Permiso -->
+  <div class="modal fade" id="modalPermiso" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title fw-bold">Solicitar permiso personal</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+              </div>
+              <div class="modal-body">
+                  <form id="formPermiso">
+                      <div class="mb-3">
+                          <label for="fechaPermiso" class="form-label">Fecha</label>
+                          <input type="date" id="fechaPermiso" class="form-control" required>
+                      </div>
+                      <div class="mb-3">
+                          <label for="motivo" class="form-label">Motivo</label>
+                          <input type="text" id="motivo" class="form-control" required>
+                      </div>
+                      <div class="mb-3">
+                          <label for="observaciones" class="form-label">Observaciones</label>
+                          <textarea id="observaciones" class="form-control" rows="3"></textarea>
+                      </div>
+                      <button type="submit" class="btn btn-primary w-100">Enviar solicitud</button>
+                  </form>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <!-- Pie de página -->
+  <footer class="bg-primary text-white text-center py-4 mt-5">
+      <div class="container">
+          <p class="mb-1">&copy; 2025 Colegio Jerusalén - Todos los derechos reservados.</p>
+          <p class="mb-0">Dirección: Calle Principal #123, Ciudad - Tel: (503) 2222-3333</p>
+      </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+      // Subir incapacidad
+      document.getElementById("formIncapacidad").addEventListener("submit", function(e){
+          e.preventDefault();
+          const archivo = document.getElementById("archivoIncapacidad").files[0];
+          if(archivo){
+              alert("Incapacidad subida con éxito: " + archivo.name);
+              bootstrap.Modal.getInstance(document.getElementById("modalIncapacidad")).hide();
+          }
+      });
+
+      // Solicitud de permiso
+      document.getElementById("formPermiso").addEventListener("submit", function(e){
+          e.preventDefault();
+          const fecha = document.getElementById("fechaPermiso").value;
+          const motivo = document.getElementById("motivo").value;
+          alert(`Solicitud enviada:\nFecha: ${fecha}\nMotivo: ${motivo}`);
+          bootstrap.Modal.getInstance(document.getElementById("modalPermiso")).hide();
+      });
+  </script>
+</body>
+</html>

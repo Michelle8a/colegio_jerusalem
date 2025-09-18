@@ -11,220 +11,276 @@
 <body class="bg-light">
 
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow">
-  <div class="container">
-    <a class="navbar-brand fw-bold" href="#">Colegio Jerusalén</a>
-    <div class="collapse navbar-collapse" id="menuNav">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item">
-          <a href="{% url 'alertas' %}" class="nav-link text-white">Alertas</a>
-        </li>
-        {% if usuario %}
-        <li class="nav-item">
-          <span class="nav-link text-white">Bienvenido: {{ usuario.correo }}</span>
-        </li>
-        <li class="nav-item">
-          <a href="{% url 'logout' %}" class="btn btn-danger">Cerrar sesión</a>
-        </li>
-        {% else %}
-        <li class="nav-item">
-          <a href="{% url 'login' %}" class="btn btn-light">Iniciar sesión</a>
-        </li>
-        {% endif %}
-      </ul>
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="#">Colegio Jerusalén</a>
+      <div class="collapse navbar-collapse" id="menuNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a href="{% url 'grados' %}" class="nav-link text-white">Grados</a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'horarios' %}" class="nav-link text-white">Horarios</a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'alertas' %}" class="nav-link text-white">Alertas</a>
+          </li>
+          {% if usuario %}
+          <li class="nav-item">
+            <span class="nav-link text-white">Bienvenido: {{ usuario.correo }}</span>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'logout' %}" class="btn btn-danger">Cerrar sesión</a>
+          </li>
+          {% else %}
+          <li class="nav-item">
+            <a href="{% url 'login' %}" class="btn btn-light">Iniciar sesión</a>
+          </li>
+          {% endif %}
+        </ul>
+      </div>
     </div>
-  </div>
-</nav>
-
+  </nav>
 
 
   <div class="container my-5">
-    <h1 class="text-center text-primary mb-4">Sistema Academico</h1>
+    <h1 class="text-center text-primary mb-4">Sistema Académico</h1>
 
-    <!-- Alumnos -->
-    <div class="card mb-4 shadow-sm">
-      <div class="card-header bg-primary text-white">Alumnos</div>
-      <div class="card-body">
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" id="academicoTabs" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="alumnos-tab" data-bs-toggle="tab" data-bs-target="#alumnos" type="button"
+          role="tab">Alumnos</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="asistencias-tab" data-bs-toggle="tab" data-bs-target="#asistencias" type="button"
+          role="tab">Asistencias</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="tareas-tab" data-bs-toggle="tab" data-bs-target="#tareas" type="button"
+          role="tab">Tareas</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="calificaciones-tab" data-bs-toggle="tab" data-bs-target="#calificaciones"
+          type="button" role="tab">Calificaciones</button>
+      </li>
+    </ul>
+
+    <!-- Tab content -->
+    <div class="tab-content p-3 border border-top-0 shadow-sm bg-white" id="academicoTabsContent">
+
+      <!-- Alumnos -->
+      <div class="tab-pane fade show active" id="alumnos" role="tabpanel" aria-labelledby="alumnos-tab">
         <form class="row g-3 mb-3">
           <div class="col-md-4">
-            <label class="form-label">Nombre</label>
-            <input type="text" class="form-control">
+            <label class="form-label">Nombres</label>
+            <input type="text" class="form-control" name="nombres">
           </div>
           <div class="col-md-4">
+            <label class="form-label">Apellidos</label>
+            <input type="text" class="form-control" name="apellidos">
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Fecha de Nacimiento</label>
+            <input type="date" class="form-control" name="fecha_nacimiento">
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Dirección</label>
+            <input type="text" class="form-control" name="direccion">
+          </div>
+          <div class="col-md-3">
             <label class="form-label">Grado</label>
-            <input type="text" class="form-control">
-          </div>
-          <div class="col-md-4">
-            <label class="form-label">Sección</label>
-            <input type="text" class="form-control">
-          </div>
-          <div class="col-12">
-            <button class="btn btn-success">Agregar Alumno</button>
-          </div>
-        </form>
-        <table class="table table-striped table-hover">
-          <thead class="table-primary">
-            <tr>
-              <th>Nombre</th>
-              <th>Grado</th>
-              <th>Sección</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Juan Perez</td>
-              <td>7°</td>
-              <td>A</td>
-            </tr>
-            <tr>
-              <td>Maria Lopez</td>
-              <td>8°</td>
-              <td>B</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- Asistencias -->
-    <div class="card mb-4 shadow-sm">
-      <div class="card-header bg-primary text-white">Asistencias</div>
-      <div class="card-body">
-        <form class="row g-3 mb-3">
-          <div class="col-md-4">
-            <label class="form-label">Alumno</label>
-            <select class="form-select">
-              <option>Juan Pérez</option>
-              <option>María López</option>
+            <select class="form-select" name="id_grado">
+              <option value="1">7° A</option>
+              <option value="2">7° B</option>
+              <option value="3">8° A</option>
             </select>
           </div>
-          <div class="col-md-4">
-            <label class="form-label">Fecha</label>
-            <input type="date" class="form-control">
-          </div>
-          <div class="col-md-4">
-            <label class="form-label">Estado</label>
-            <select class="form-select">
-              <option>Asistió</option>
-              <option>Falta</option>
-              <option>Justificado</option>
+          <div class="col-md-3">
+            <label class="form-label">Responsable</label>
+            <select class="form-select" name="id_responsable">
+              <option value="1">Carlos Pérez (Padre)</option>
+              <option value="2">Ana López (Madre)</option>
+              <option value="3">Marta Hernández (Encargada)</option>
             </select>
           </div>
           <div class="col-12">
-            <button class="btn btn-success">Guardar</button>
+            <button type="submit" class="btn btn-success">Agregar Alumno</button>
           </div>
         </form>
-        <table class="table table-striped table-hover">
-          <thead class="table-primary">
-            <tr>
-              <th>Fecha</th>
-              <th>Alumno</th>
-              <th>Estado</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>11/09/2025</td>
-              <td>Juan Pérez</td>
-              <td>Asistió</td>
-            </tr>
-            <tr>
-              <td>11/09/2025</td>
-              <td>María López</td>
-              <td>Falta</td>
-            </tr>
-          </tbody>
-        </table>
       </div>
-    </div>
 
-    <div class="card mb-4 shadow-sm">
-      <div class="card-header bg-primary text-white">Tareas</div>
-      <div class="card-body">
-        <form class="row g-3 mb-3">
-          <div class="col-md-4">
-            <label class="form-label">Materia</label>
-            <input type="text" class="form-control">
+      <!-- Asistencias -->
+      <div class="tab-pane fade" id="asistencias" role="tabpanel" aria-labelledby="asistencias-tab">
+        <div class="card shadow-sm">
+          <div class="card-header bg-primary text-white">Asistencias</div>
+          <div class="card-body">
+            <form class="row g-3 mb-3">
+              <div class="col-md-4">
+                <label class="form-label">Alumno</label>
+                <select class="form-select" name="id_alumno">
+                  <option value="1">Juan Pérez</option>
+                  <option value="2">María López</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Fecha</label>
+                <input type="date" class="form-control" name="fecha">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Estado</label>
+                <select class="form-select" name="estado">
+                  <option value="Asistió">Asistió</option>
+                  <option value="Falta">Falta</option>
+                  <option value="Justificado">Justificado</option>
+                </select>
+              </div>
+              <div class="col-12">
+                <button type="submit" class="btn btn-success">Guardar</button>
+              </div>
+            </form>
+            <table class="table table-striped table-hover">
+              <thead class="table-primary">
+                <tr>
+                  <th>Fecha</th>
+                  <th>Alumno</th>
+                  <th>Estado</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>2025-09-11</td>
+                  <td>Juan Pérez</td>
+                  <td>Asistió</td>
+                </tr>
+                <tr>
+                  <td>2025-09-11</td>
+                  <td>María López</td>
+                  <td>Falta</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
-          <div class="col-md-4">
-            <label class="form-label">Descripción</label>
-            <input type="text" class="form-control">
-          </div>
-          <div class="col-md-4">
-            <label class="form-label">Entrega</label>
-            <input type="date" class="form-control">
-          </div>
-          <div class="col-12">
-            <button class="btn btn-success">Agregar</button>
-          </div>
-        </form>
-        <table class="table table-striped table-hover">
-          <thead class="table-primary">
-            <tr>
-              <th>Materia</th>
-              <th>Descripción</th>
-              <th>Fecha Entrega</th>
-              <th>Estado</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Matemática</td>
-              <td>Resolver pág. 25-27</td>
-              <td>15/09/2025</td>
-              <td>Pendiente</td>
-            </tr>
-          </tbody>
-        </table>
+        </div>
       </div>
-    </div>
 
-    <div class="card mb-4 shadow-sm">
-      <div class="card-header bg-primary text-white">Calificaciones</div>
-      <div class="card-body">
-        <form class="row g-3 mb-3">
-          <div class="col-md-4">
-            <label class="form-label">Alumno</label>
-            <select class="form-select">
-              <option>Juan Pérez</option>
-              <option>María López</option>
-            </select>
+      <!-- Tareas -->
+      <div class="tab-pane fade" id="tareas" role="tabpanel" aria-labelledby="tareas-tab">
+        <div class="card shadow-sm">
+          <div class="card-header bg-primary text-white">Tareas</div>
+          <div class="card-body">
+            <form class="row g-3 mb-3">
+              <div class="col-md-4">
+                <label class="form-label">Título</label>
+                <input type="text" class="form-control" name="titulo" placeholder="Ej: Ejercicios Capítulo 5">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Materia</label>
+                <select class="form-select" name="id_materia">
+                  <option value="1">Matemática</option>
+                  <option value="2">Lenguaje</option>
+                  <option value="3">Ciencias</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Fecha de Entrega</label>
+                <input type="date" class="form-control" name="fecha_entrega">
+              </div>
+              <div class="col-12">
+                <label class="form-label">Descripción</label>
+                <input type="text" class="form-control" name="descripcion" placeholder="Ej: Resolver pág. 25-27">
+              </div>
+              <div class="col-12">
+                <button type="submit" class="btn btn-success">Agregar</button>
+              </div>
+            </form>
+            <table class="table table-striped table-hover">
+              <thead class="table-primary">
+                <tr>
+                  <th>Título</th>
+                  <th>Materia</th>
+                  <th>Descripción</th>
+                  <th>Fecha Entrega</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Ejercicios Capítulo 5</td>
+                  <td>Matemática</td>
+                  <td>Resolver pág. 25-27</td>
+                  <td>2025-09-15</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
-          <div class="col-md-4">
-            <label class="form-label">Materia</label>
-            <input type="text" class="form-control">
-          </div>
-          <div class="col-md-4">
-            <label class="form-label">Nota</label>
-            <input type="number" min="0" max="10" step="0.1" class="form-control">
-          </div>
-          <div class="col-12">
-            <button class="btn btn-success">Guardar</button>
-          </div>
-        </form>
-        <table class="table table-striped table-hover">
-          <thead class="table-primary">
-            <tr>
-              <th>Alumno</th>
-              <th>Matemática</th>
-              <th>Lenguaje</th>
-              <th>Ciencias</th>
-              <th>Promedio</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Juan Pérez</td>
-              <td>8.5</td>
-              <td>9.0</td>
-              <td>7.5</td>
-              <td>8.3</td>
-            </tr>
-          </tbody>
-        </table>
+        </div>
       </div>
-    </div>
 
+      <!-- Calificaciones -->
+      <div class="tab-pane fade" id="calificaciones" role="tabpanel" aria-labelledby="calificaciones-tab">
+        <div class="card shadow-sm">
+          <div class="card-header bg-primary text-white">Calificaciones</div>
+          <div class="card-body">
+            <form class="row g-3 mb-3">
+              <div class="col-md-3">
+                <label class="form-label">Alumno</label>
+                <select class="form-select" name="id_alumno">
+                  <option value="1">Juan Pérez</option>
+                  <option value="2">María López</option>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label">Materia</label>
+                <select class="form-select" name="id_materia">
+                  <option value="1">Matemática</option>
+                  <option value="2">Lenguaje</option>
+                  <option value="3">Ciencias</option>
+                </select>
+              </div>
+              <div class="col-md-2">
+                <label class="form-label">Nota</label>
+                <input type="number" min="0" max="10" step="0.1" class="form-control" name="nota">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Periodo</label>
+                <select class="form-select" name="periodo">
+                  <option value="1er Trimestre">1er Trimestre</option>
+                  <option value="2do Trimestre">2do Trimestre</option>
+                  <option value="3er Trimestre">3er Trimestre</option>
+                </select>
+              </div>
+              <div class="col-12">
+                <button type="submit" class="btn btn-success">Guardar</button>
+              </div>
+            </form>
+            <table class="table table-striped table-hover">
+              <thead class="table-primary">
+                <tr>
+                  <th>Alumno</th>
+                  <th>Matemática</th>
+                  <th>Lenguaje</th>
+                  <th>Ciencias</th>
+                  <th>Promedio</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Juan Pérez</td>
+                  <td>8.5</td>
+                  <td>9.0</td>
+                  <td>7.5</td>
+                  <td>8.3</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div>
   </div>
+
+
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
