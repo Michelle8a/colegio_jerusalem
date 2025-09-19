@@ -4,8 +4,6 @@ from . import views
 from . import usuarios_api
 
 #------------------------
-from representantes import views_representantes
-from django.contrib import admin
 
 urlpatterns = [
     # Página de inicio después de iniciar sesión
@@ -51,8 +49,16 @@ urlpatterns = [
     path('lista_maestros/', views.listar_maestros, name='lista_maestros'),
 
 
+#para materias 
+    path('materias/', views.materias, name='materias'),
+    path('get_materias/', views.listar_materias, name='get_materias'),
+    path('add_materia/', views.add_materia, name='add_materia'),
+    #para ontener maestros en la vista de materias
+    path('get_maestros/', views.get_maestros, name='get_maestros'),
+
+
+
 #------------------------
-path('admin/', admin.site.urls),
-path('representantes/', views_representantes.lista_representantes, name='lista_representantes'),
+
     
 ]

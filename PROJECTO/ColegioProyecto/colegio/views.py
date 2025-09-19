@@ -235,29 +235,65 @@ def listar_maestros(request):
     })
 
 
+#-------------------------------funciones de materias---------------------------
+def materias(request):
+    if request.method == "GET":
+        cursor.execute("SELECT * FROM materias")
+        materias = cursor.fetchall()
+        
+    return render(request, "materias/materias.html", {"materias": materias})
+
+#obtener lista de materia carga las materias en la vista 
+def listar_materias(request):
+    if request.method == "GET":
+        cursor.execute("SELECT * FROM materias")
+        materia = cursor.fetchall()
+        return JsonResponse(materia, safe=False)
+
+#insertar materia a la base de datos
+@csrf_exempt
+def add_materia(request):
+    if request.method == "POST":
+        try:
+            data = json.loads(request.body)
+            nombre = data.get("nombre")
+            descripcion = data.get("descripcion")
+            id_maestro = data.get("id_maestro")
+            
+            cursor.execute("INSERT INTO materias(nombre, descripcion, id_maestro) VALUES(%s, %s, %s)",[nombre,descripcion,id_maestro]);
+            db.commit()
+            #INSERT INTO `materias` (`id_materia`, `nombre`, `descripcion`, `id_maestro`) VALUES (NULL, 'programacion python', 'programacion con python', '1'),
+            return JsonResponse({"success":True,"message":"materia se guardo con exito"});
+        except Exception as e:
+            return JsonResponse({"success": False, "message": str(e)}, status = 400)
+
+ # ----LISTA DE MAESTROS para la vista de materias ----
+def get_maestros(request):
+    # Verificar sesión
+    if "usuario_id" not in request.session:
+        return redirect("login")
+
+    # Verificar rol: solo admin o maestro
+    rol = request.session.get("usuario_rol")
+    if rol not in ["admin", "maestro"]:
+        return redirect("login")
+
+    # Obtener todos los maestros de la BD
+    cursor.execute("SELECT id_maestro, nombres, apellidos, especialidad FROM maestros")
+    lista_maestros = cursor.fetchall()  # Devuelve diccionarios
+
+    # Información del usuario para la plantilla
+    usuario = {
+        "correo": request.session["usuario_correo"],
+        "rol": rol
+    }
+    data = {
+        "usuario": usuario,
+        "maestros": lista_maestros
+        }
+
+    return JsonResponse(data);
+
+
 
 #---------------------------
-
-def lista_representantes():
-    #conn = get_connection()
-    #cursor = conn.cursor()
-
-    # 🔹 Consulta SQL
-    cursor.execute("SELECT Id, Nombre, Apellido, Telefono, Email FROM Representante")
-    rows = cursor.fetchall()
-
-    # Convertir a lista de diccionarios para Jinja2
-    representantes = []
-    for row in rows:
-        representantes.append({
-            "id": row[0],
-            "nombre": row[1],
-            "apellido": row[2],
-            "telefono": row[3],
-            "email": row[4]
-        })
-
-    #cursor.close()
-    #conn.close()
-
-    return render("Representantes.html", representantes=representantes)
